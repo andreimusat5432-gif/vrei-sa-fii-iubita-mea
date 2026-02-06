@@ -2,75 +2,65 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
-  <title>Întrebare 💖</title>
+  <title>Vrei să fii iubita mea?</title>
+
   <style>
     body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: Arial, sans-serif;
-    }
-
-    .container {
       text-align: center;
-      position: relative;
+      margin-top: 100px;
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f0;
     }
 
     h1 {
-      margin-bottom: 40px;
-      color: #fff;
+      font-size: 40px;
     }
 
     button {
-      font-size: 18px;
+      font-size: 24px;
       padding: 12px 30px;
+      margin: 15px;
+      cursor: pointer;
       border-radius: 10px;
       border: none;
-      cursor: pointer;
-      margin: 10px;
     }
 
     #da {
-      background-color: #4CAF50;
+      background-color: #ff4d88;
       color: white;
     }
 
     #nu {
-      background-color: #f44336;
-      color: white;
-      position: absolute;
+      background-color: #ccc;
+      position: relative;
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Vrei să fii iubita mea? 💖</h1>
-    <button id="da">DA</button>
-    <button id="nu">NU</button>
-  </div>
+  <h1>Vrei să fii iubita mea? ❤️</h1>
+
+  <button id="da">DA</button>
+  <button id="nu">NU</button>
 
   <script>
-    const butonNu = document.getElementById("nu");
+    const nuBtn = document.getElementById("nu");
+    let size = 24;
+    let direction = 1;
 
-    butonNu.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 120);
-      const y = Math.random() * (window.innerHeight - 60);
-      butonNu.style.left = x + "px";
-      butonNu.style.top = y + "px";
-    });
+    nuBtn.addEventListener("mouseover", () => {
+      // se mută stânga-dreapta
+      const move = Math.random() * 200 * direction;
+      nuBtn.style.transform = `translateX(${move}px)`;
+      direction *= -1;
 
-    document.getElementById("da").addEventListener("click", () => {
-      document.body.innerHTML = `
-        <h1 style="color:white; font-size:40px;">
-          Felicitări 🎉💘
-        </h1>
-      `;
+      // textul devine mai mare
+      size += 6;
+      nuBtn.style.fontSize = size + "px";
     });
   </script>
 
 </body>
 </html>
+
