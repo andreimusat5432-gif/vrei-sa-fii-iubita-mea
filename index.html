@@ -1,150 +1,138 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8" />
-<title>apasă-mă te rog andreea</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paianjeni Fun</title>
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to bottom, #ffe0e0, #ffd0ff);
+        overflow: hidden;
+        font-family: 'Comic Sans MS', sans-serif;
+        position: relative;
+    }
 
-  .container {
-    text-align: center;
-    background: white;
-    padding: 40px 60px;
-    border-radius: 25px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    position: relative;
-    z-index: 10;
-  }
+    #question {
+        position: absolute;
+        top: 10%;
+        font-size: 2rem;
+        text-align: center;
+        color: #333;
+        text-shadow: 1px 1px 2px #fff;
+    }
 
-  h1 {
-    font-size: 42px;
-    margin-bottom: 40px;
-  }
+    .btn {
+        padding: 15px 30px;
+        font-size: 1.5rem;
+        margin: 20px;
+        border-radius: 15px;
+        border: 2px solid #333;
+        cursor: pointer;
+        position: absolute;
+        transition: all 0.3s ease;
+        background-color: #ff9cee;
+        color: #333;
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
 
-  button {
-    border: none;
-    border-radius: 50px;
-    padding: 15px 40px;
-    font-size: 26px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 0 15px;
-  }
+    #bravo {
+        position: absolute;
+        font-size: 3rem;
+        color: red;
+        display: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow: 2px 2px 5px #000;
+    }
 
-  #da {
-    background: linear-gradient(45deg, #ff4d6d, #ff758f);
-    color: white;
-    box-shadow: 0 10px 20px rgba(255,77,109,0.5);
-  }
+    .spider {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: url('https://i.postimg.cc/LsFTF5Zk/spider.png') no-repeat center/contain;
+        pointer-events: none;
+        animation: crawl 10s linear infinite;
+    }
 
-  #nu {
-    background: #eee;
-    color: #333;
-    position: absolute;
-    border-radius: 50px;
-    padding: 15px 40px;
-    font-size: 26px;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .spider {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background: url('https://i.postimg.cc/1X5ZHZ03/spider-icon.png') no-repeat center center;
-    background-size: contain;
-    pointer-events: none;
-    z-index: 9999;
-  }
+    @keyframes crawl {
+        0% { transform: translate(0,0) rotate(0deg);}
+        25% { transform: translate(200px,100px) rotate(90deg);}
+        50% { transform: translate(-200px,200px) rotate(180deg);}
+        75% { transform: translate(100px,-150px) rotate(270deg);}
+        100% { transform: translate(0,0) rotate(360deg);}
+    }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-  <h1>Vrei să fii iubita mea? ❤️</h1>
-  <button id="da">DA</button>
-</div>
-
-<button id="nu">NU</button>
+<div id="question">Vrei să te mănânce păianjenii, Andreea?</div>
+<button id="yesBtn" class="btn">DA</button>
+<button id="noBtn" class="btn">NU</button>
+<div id="bravo">Bravo! Te-au mâncat! 😈</div>
 
 <script>
-  const nu = document.getElementById("nu");
-  const da = document.getElementById("da");
-  let daSize = 26;
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const body = document.body;
+const bravo = document.getElementById('bravo');
 
-  // Creează un păianjen mic
-  function creeazaPaianjen() {
+// Funcție pentru poziționarea aleatorie
+function randomPosition(el) {
+    const x = Math.random() * (window.innerWidth - el.offsetWidth);
+    const y = Math.random() * (window.innerHeight - el.offsetHeight);
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+}
+
+// Schimbă locația butonului NU mereu când nu este apăsat
+noBtn.addEventListener('mouseenter', () => {
+    randomPosition(noBtn);
+    // Mărește butonul DA puțin
+    yesBtn.style.transform = 'scale(1.2)';
+    setTimeout(() => yesBtn.style.transform = 'scale(1)', 300);
+});
+
+// Apăsarea butonului DA
+yesBtn.addEventListener('click', () => {
+    // Ascunde butoanele
+    yesBtn.style.display = 'none';
+    noBtn.style.display = 'none';
+    // Arată mesajul
+    bravo.style.display = 'block';
+    // Creează 1000 de păianjeni mici
+    for(let i=0; i<1000; i++) {
+        const spider = document.createElement('div');
+        spider.classList.add('spider');
+        spider.style.left = Math.random() * window.innerWidth + 'px';
+        spider.style.top = Math.random() * window.innerHeight + 'px';
+        spider.style.width = (5 + Math.random()*15) + 'px';
+        spider.style.height = (5 + Math.random()*15) + 'px';
+        body.appendChild(spider);
+    }
+});
+
+// Creează un păianjen mic care se plimbă după cursor
+body.addEventListener('mousemove', (e) => {
     const spider = document.createElement('div');
     spider.classList.add('spider');
+    spider.style.left = e.clientX + 'px';
+    spider.style.top = e.clientY + 'px';
+    spider.style.width = '15px';
+    spider.style.height = '15px';
+    body.appendChild(spider);
+    setTimeout(() => spider.remove(), 3000);
+});
 
-    // poziționare random pe ecran
-    spider.style.left = Math.random() * (window.innerWidth - 30) + 'px';
-    spider.style.top = Math.random() * (window.innerHeight - 30) + 'px';
-
-    document.body.appendChild(spider);
-    miscaPaianjen(spider);
-
-    // șterge păianjenul după 10 secunde
-    setTimeout(() => {
-      spider.remove();
-    }, 10000);
-  }
-
-  // Funcție care animă păianjenul să se miște aleator pe ecran
-  function miscaPaianjen(spider) {
-    const viteza = 1000 + Math.random() * 2000; // 1-3 secunde
-
-    function misca() {
-      spider.style.left = Math.random() * (window.innerWidth - 30) + 'px';
-      spider.style.top = Math.random() * (window.innerHeight - 30) + 'px';
-    }
-
-    misca();
-    setInterval(misca, viteza);
-  }
-
-  // La hover pe „NU” creează un păianjen mic care se plimbă și mărește „DA”
-  nu.addEventListener('mouseenter', () => {
-    creeazaPaianjen();
-
-    daSize += 6;
-    da.style.fontSize = daSize + 'px';
-
-    // mută butonul NU în poziție random pentru extra distracție
-    nu.style.left = Math.random() * (window.innerWidth - nu.offsetWidth) + 'px';
-    nu.style.top = Math.random() * (window.innerHeight - nu.offsetHeight) + 'px';
-  });
-
-  // La click pe „DA” apar 1000 de păianjeni care se plimbă
-  da.addEventListener('click', () => {
-    for (let i = 0; i < 1000; i++) {
-      creeazaPaianjen();
-    }
-  });
-
-  // poziția inițială a butonului NU
-  nu.style.left = (window.innerWidth / 2 + 100) + 'px';
-  nu.style.top = (window.innerHeight / 2) + 'px';
-
-  // Ajustare la redimensionare fereastră
-  window.addEventListener('resize', () => {
-    nu.style.left = (window.innerWidth / 2 + 100) + 'px';
-    nu.style.top = (window.innerHeight / 2) + 'px';
-  });
+// Poziționare inițială
+randomPosition(yesBtn);
+randomPosition(noBtn);
 </script>
 
 </body>
 </html>
-
